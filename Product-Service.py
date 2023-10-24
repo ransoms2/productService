@@ -15,14 +15,14 @@ class Product(db.Model):
     quantity = db.Column(db.Integer, nullable = True)
 
 # Endpoint 1: Get all tasks
-@app.route('http://86.109.211.132/products', methods=['GET'])
+@app.route('/products', methods=['GET'])
 def get_all_products():
     products = Product.query.all()
     groccery_list = [{"id": product.id, "name": product.name, "price": product.price, "quantity": product.quantity} for product in products]
     return jsonify({"products": groccery_list})
 
 # Endpoint 2: Get a specific task by ID
-@app.route('http://86.109.211.132/products/<int:product_id>', methods=['GET'])
+@app.route('/products/<int:product_id>', methods=['GET'])
 def get_products(product_id):
     product = Product.query.get(product_id)
     if product:
@@ -31,7 +31,7 @@ def get_products(product_id):
         return jsonify({"error": "Product not found"}), 404
 
 # Endpoint 3: Create a new task
-@app.route('http://86.109.211.132/products', methods=['POST'])
+@app.route('/products', methods=['POST'])
 def create_product():
     data = request.json
     if "name" not in data:
